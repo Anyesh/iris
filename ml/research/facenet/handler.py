@@ -48,7 +48,7 @@ class FaceDetector(BaseHandler):
           with open(img_path, 'rb') as f:
             res_bytes.append(f.read())
             os.remove(img_path)
-      if len(ten_imgs) > 0:
+      if ten_imgs:
         stacked_imgs = torch.stack(ten_imgs) # pylint: disable=no-member
         embeddings = self.resnet_model(stacked_imgs)
         result = [

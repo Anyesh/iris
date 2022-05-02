@@ -29,11 +29,12 @@ class Places(Component):
         metadata = et.get_metadata(self.file_name)
         coords = []
         if 'EXIF:GPSLatitude' in metadata and 'EXIF:GPSLongitude' in metadata:
-          coords.append(metadata['EXIF:GPSLatitude'])
-          coords.append(metadata['EXIF:GPSLongitude'])
+          coords.extend((metadata['EXIF:GPSLatitude'], metadata['EXIF:GPSLongitude']))
         elif 'Composite:GPSLatitude' in metadata and 'Composite:GPSLongitude' in metadata:
-          coords.append(metadata['Composite:GPSLatitude'])
-          coords.append(metadata['Composite:GPSLongitude'])
+          coords.extend((
+              metadata['Composite:GPSLatitude'],
+              metadata['Composite:GPSLongitude'],
+          ))
         address = {}
         name = ''
 

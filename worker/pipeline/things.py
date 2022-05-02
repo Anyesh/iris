@@ -24,7 +24,7 @@ class Things(Component):
     model_name = self.MODELS[0] if inference_type == self.INFERENCE_TYPES[0] else self.MODELS[1]
     data = None
     image = Image.open(self.file_name)
-    fixed_height = 800 if image.size[1] >= 800 else image.size[1]
+    fixed_height = min(image.size[1], 800)
     height_percent = (fixed_height / float(image.size[1]))
     width_size = int((float(image.size[0]) * float(height_percent)))
     image = image.resize((width_size, fixed_height), Image.NEAREST)

@@ -14,7 +14,6 @@ class People(Component):
 
   def get_inference_results(self):
     """Calls torchserve inference api and returns response"""
-    result_classes = []
     data = None
     with open(self.file_name, 'rb') as f:
       data = f.read()
@@ -24,7 +23,7 @@ class People(Component):
       data = res.json()
       return data
     print(f'error while making inference request, status code: {res.status_code}')
-    return result_classes
+    return []
 
   def upsert_entity(self, data):
     """Upserts people entity"""
@@ -57,7 +56,7 @@ class People(Component):
       people = list(self.db['entities'].find({'entityType': 'people'}))
       insert_people = None
       image_url = upload_image(val['data'])
-      if len(people) == 0:
+      if not people:
         insert_people = {'name': 'Face #1', 'embedding': val['embedding']}
       else:
         _id = get_closest_people(people, val['embedding'])
